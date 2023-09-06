@@ -26,3 +26,7 @@ Route::post('/usuario/{name}', function ($name) {
     return "Datos enviados: \n- Nombre: $name";
 });
 
+// PUT: actualizar información
+Route::put('/usuario/{name}', function ($name) {
+    return "Datos actualizados: \n- Nombre: $name";
+});
