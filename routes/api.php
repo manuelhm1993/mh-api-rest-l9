@@ -28,5 +28,10 @@ Route::post('/usuario/{name}', function ($name) {
 
 // PUT: actualizar información
 Route::put('/usuario/{name}', function ($name) {
-    return "Datos actualizados: \n- Nombre: $name";
+    return "Datos actualizados put: \n- Nombre: $name";
+});
+
+// PATCH: actualizar información de forma parcial
+Route::patch('/usuario/{name}', function ($name) {
+    return "Datos actualizados patch: \n- Nombre: $name";
 });
