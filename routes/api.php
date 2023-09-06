@@ -35,3 +35,8 @@ Route::put('/usuario/{name}', function ($name) {
 Route::patch('/usuario/{name}', function ($name) {
     return "Datos actualizados patch: \n- Nombre: $name";
 });
+
+// DELETE: eliminar información
+Route::delete('/usuario/{id}', function ($id) {
+    return "Datos eliminados: \n- Id: $id";
+});
