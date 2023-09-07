@@ -79,7 +79,7 @@ Route::post('/users', function (Request $request) {
     $user = User::create([
         'name'     => $request->name,
         'email'    => $request->email,
-        'password' => bcrypt($request->password),
+        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password -> es la clave
     ]);
 
     $data = ['user' => $user];
