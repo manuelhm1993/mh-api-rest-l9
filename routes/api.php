@@ -40,3 +40,8 @@ Route::patch('/usuario/{name}', function ($name) {
 Route::delete('/usuario/{id}', function ($id) {
     return "Datos eliminados: \n- Id: $id";
 });
+
+// Ejercicio RANDOM
+Route::get('/random/{min}/{max}', function ($min, $max) {
+    return rand($min, $max);
+});
