@@ -40,3 +40,21 @@ Route::patch('/usuario/{name}', function ($name) {
 Route::delete('/usuario/{id}', function ($id) {
     return "Datos eliminados: \n- Id: $id";
 });
+
+// Ejercicio RANDOM
+Route::get('/random/{min}/{max}', function ($min, $max) {
+    $data = []; // Array con los datos de la respuesta
+    $status = 200; // Status de respuesta
+
+    if(!is_numeric($min) || !is_numeric($max)) {
+        $data = ['Error' => 'Se esperaban valores de tipo numérico'];
+        $status = 400;
+
+        return response()->json($data, $status);
+    }
+
+    $numero_aleatorio = rand($min, $max);// Número aleatorio en el rango especificado
+    $data = ['numero_aleatorio' => $numero_aleatorio];
+
+    return response()->json($data, $status);
+});
