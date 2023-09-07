@@ -43,5 +43,7 @@ Route::delete('/usuario/{id}', function ($id) {
 
 // Ejercicio RANDOM
 Route::get('/random/{min}/{max}', function ($min, $max) {
-    return rand($min, $max);
+    $numero_aleatorio = rand($min, $max);
+
+    return response($numero_aleatorio, 200);
 });
