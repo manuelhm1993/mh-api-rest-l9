@@ -45,5 +45,7 @@ Route::delete('/usuario/{id}', function ($id) {
 Route::get('/random/{min}/{max}', function ($min, $max) {
     $numero_aleatorio = rand($min, $max);
 
-    return response($numero_aleatorio, 200)->header('Content-Type', 'text/plain');
+    return response()
+    // ->header('Content-Type', 'application/json') // El header no es necesario si la response es json, laravel lo hace por default
+    ->json(compact('numero_aleatorio'), 200); // Se puede usar compact igual que en el controlador
 });
