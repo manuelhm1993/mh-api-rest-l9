@@ -64,6 +64,8 @@ Route::get('/random/{min}/{max}', function ($min, $max) {
 //
 // Endpoints: en las APIs los endpoints son los puntos de acceso o rutas
 //
+// V1
+//
 // La api devuelve todos los usuarios con todos sus datos
 Route::get('/users', function () {
     $users = User::all();
@@ -76,14 +78,59 @@ Route::get('/users', function () {
 
 // Permite crear un nuevo usuario con los datos de entrada
 Route::post('/users', function (Request $request) {
-    $user = User::create([
-        'name'     => $request->name,
-        'email'    => $request->email,
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password -> es la clave
-    ]);
-
-    $data = ['user' => $user];
+    $data = [];
     $status = 200;
 
+    try {
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        $data = ['user' => $user];
+    }
+    catch (\Exception $e) {
+        $data = ['Error' => $e->getMessage()];
+        $status = 400;
+    }
+
     return response()->json($data, $status);
+});
+
+// V2
+//
+// Agrupar los endpoints de la versión 2
+Route::prefix('v2')->group(function () {
+    // La api devuelve todos los usuarios con los campos: name, email
+    Route::get('/users', function () {
+        $users = User::select('name', 'email')->get();
+
+        $data = ['users' => $users];
+        $status = 200;
+
+        return response()->json($data, $status);
+    });
+
+    // Permite crear un nuevo usuario con los datos de entrada
+    Route::post('/users', function (Request $request) {
+        $data = [];
+        $status = 200;
+
+        try {
+            $user = User::create([
+                'name'     => $request->name,
+                'email'    => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
+
+            $data = ['user' => $user];
+        }
+        catch (\Exception $e) {
+            $data = ['Error' => $e->getMessage()];
+            $status = 400;
+        }
+
+        return response()->json($data, $status);
+    });
 });
