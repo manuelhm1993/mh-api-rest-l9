@@ -45,5 +45,5 @@ Route::delete('/usuario/{id}', function ($id) {
 Route::get('/random/{min}/{max}', function ($min, $max) {
     $numero_aleatorio = rand($min, $max);
 
-    return response($numero_aleatorio, 200);
+    return response($numero_aleatorio, 200)->header('Content-Type', 'text/plain');
 });
