@@ -43,14 +43,18 @@ Route::delete('/usuario/{id}', function ($id) {
 
 // Ejercicio RANDOM
 Route::get('/random/{min}/{max}', function ($min, $max) {
-    // Número aleatorio en el rango especificado
-    $numero_aleatorio = rand($min, $max);
+    $data = []; // Array con los datos de la respuesta
+    $status = 200; // Status de respuesta
 
-    // Array con los datos de la respuesta
+    if(!is_numeric($min) || !is_numeric($max)) {
+        $data = ['Error' => 'Se esperaban valores de tipo numérico'];
+        $status = 400;
+
+        return response()->json($data, $status);
+    }
+
+    $numero_aleatorio = rand($min, $max);// Número aleatorio en el rango especificado
     $data = ['numero_aleatorio' => $numero_aleatorio];
-
-    // Status de respuesta
-    $status = 200;
 
     return response()->json($data, $status);
 });
