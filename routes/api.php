@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,34 @@ Route::get('/random/{min}/{max}', function ($min, $max) {
 
     $numero_aleatorio = rand($min, $max);// Número aleatorio en el rango especificado
     $data = ['numero_aleatorio' => $numero_aleatorio];
+
+    return response()->json($data, $status);
+});
+
+// ------------------------------------------------------------------- Versionando
+//
+// Endpoints: en las APIs los endpoints son los puntos de acceso o rutas
+//
+// La api devuelve todos los usuarios con todos sus datos
+Route::get('/users', function () {
+    $users = User::all();
+
+    $data = ['users' => $users];
+    $status = 200;
+
+    return response()->json($data, $status);
+});
+
+// Permite crear un nuevo usuario con los datos de entrada
+Route::post('/users', function (Request $request) {
+    $user = User::create([
+        'name'     => $request->name,
+        'email'    => $request->email,
+        'password' => bcrypt($request->password),
+    ]);
+
+    $data = ['user' => $user];
+    $status = 200;
 
     return response()->json($data, $status);
 });
